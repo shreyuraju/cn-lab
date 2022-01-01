@@ -27,9 +27,10 @@ public class bellmanford {
 		bf.bellmanevaluation(source,adj_matrix,nv);
 		sc.close();
 	}
+	private int nv;
 	private int distance[];
 	public bellmanford(int nv) {
-		
+		this.nv=nv;
 		distance=new int[nv+1];
 	}
 	public void bellmanevaluation(int source,int adj_matrix[][],int nv) {
@@ -51,12 +52,12 @@ public class bellmanford {
 		for( int sn=1;sn<=nv;sn++) {
 			for(int dn=1;dn<=nv;dn++) {
 				if(adj_matrix[sn][dn]!=999) {
-					if(distance[dn]>(distance[sn]+adj_matrix[sn][dn])) {
-						distance[dn]=distance[sn]+adj_matrix[sn][dn];
+					if(distance[dn]>(distance[sn]+adj_matrix[sn][dn]){					
 						System.out.println("graph contains negative edge cycles");
 					}
 				}
 			}
+			
 		}
 		for(int ver=1;ver<=nv;ver++) {
 			System.out.println("distance from source "+source+" to destination "+ver+" is :"+distance[ver]);
