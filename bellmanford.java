@@ -21,6 +21,13 @@ public class bellmanford {
 				}
 			}
 		}
+		System.out.println("given adjecency matrix:");
+		for(int sn=1;sn<=nv;sn++) {
+			for(int dn=1;dn<=nv;dn++) {
+				System.out.print(adj_matrix[sn][dn]+" ");
+			}
+			System.out.print("\n");
+		}
 		System.out.print("Enter source node:");
 			int source=sc.nextInt();
 		bellmanford bf=new bellmanford(nv);
@@ -52,8 +59,9 @@ public class bellmanford {
 		for( int sn=1;sn<=nv;sn++) {
 			for(int dn=1;dn<=nv;dn++) {
 				if(adj_matrix[sn][dn]!=999) {
-					if(distance[dn]>(distance[sn]+adj_matrix[sn][dn]){					
+					if(distance[dn]>(distance[sn]+adj_matrix[sn][dn])) {	
 						System.out.println("graph contains negative edge cycles");
+						break;
 					}
 				}
 			}
