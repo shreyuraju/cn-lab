@@ -1,74 +1,81 @@
-import java.io.*;
 import java.util.*;
-public class bellmanford {
-	
-	public static void main(String args[]) {
-		Scanner sc=new Scanner(System.in);
-		
-		System.out.print("Enter no.of vertices:");
-		int nv=sc.nextInt();
-		int adj_matrix[][]=new int[nv+1][nv+1];
-		System.out.println("Enter adjecency matrix:");
-		for(int sn=1;sn<=nv;sn++) {
-			for(int dn=1;dn<=nv;dn++) {
-				adj_matrix[sn][dn]=sc.nextInt();
-				if(sn==dn) {
-					adj_matrix[sn][dn]=0;
-					continue;
-				}
-				if(adj_matrix[sn][dn] == 0) {
-					adj_matrix[sn][dn]=999;
-				}
+import java.io.*;
+public class bellmanford{
+int n=0;
+	public static void main(String args[]){
+	int n=0;
+	int source;
+	Scanner sc=new Scanner(System.in);
+	System.out.println("enter the number of vertices");
+	n=sc.nextInt();
+	int a[][]=new int[n+1][n+1];
+	System.out.println("enter the adjacency matrix");
+	for(int sn=1;sn<=n;sn++){
+	for(int dn=1;dn<=n;dn++){
+		a[sn][dn]=sc.nextInt();
+		if(sn==dn){
+			a[sn][dn]=0;
+			continue;
+			}
+		if(a[sn][dn]==0){
+			a[sn][dn]=999;
 			}
 		}
-		System.out.println("given adjecency matrix:");
-		for(int sn=1;sn<=nv;sn++) {
-			for(int dn=1;dn<=nv;dn++) {
-				System.out.print(adj_matrix[sn][dn]+" ");
-			}
-			System.out.print("\n");
-		}
-		System.out.print("Enter source node:");
-			int source=sc.nextInt();
-		bellmanford bf=new bellmanford(nv);
-		bf.bellmanevaluation(source,adj_matrix,nv);
-		sc.close();
 	}
-	private int nv;
+	for(int sn=1;sn<=n;sn++){
+	for(int dn=1;dn<=n;dn++){
+	System.out.print(a[sn][dn]);
+	}
+	System.out.println();
+	}
+	System.out.println("enter the source vertex");
+	source=sc.nextInt();
+	bellmanford bf=new bellmanford(n);
+	bf.evaluation(source,a);
+	sc.close();
+	}
 	private int distance[];
-	public bellmanford(int nv) {
-		this.nv=nv;
-		distance=new int[nv+1];
-	}
-	public void bellmanevaluation(int source,int adj_matrix[][],int nv) {
-		for(int node=1;node<=nv;node++) {
+	public bellmanford(int n){
+		this.n=n;
+		distance=new int[n+1];
+		}
+	public void evaluation(int source,int a[][]){
+		for(int node=1;node<=n;node++){
 			distance[node]=999;
-		}
-		distance[source]=0;
-		for(int node=1;node<=nv;node++) {
-			for(int sn=1;sn<=nv;sn++) {
-				for(int dn=1;dn<=nv;dn++) {
-					if(adj_matrix[sn][dn]!=999) {
-						if(distance[dn]>(distance[sn]+adj_matrix[sn][dn])) {
-							distance[dn]=distance[sn]+adj_matrix[sn][dn];
-						}
-					}
-				}
 			}
-		}
-		for( int sn=1;sn<=nv;sn++) {
-			for(int dn=1;dn<=nv;dn++) {
-				if(adj_matrix[sn][dn]!=999) {
-					if(distance[dn]>(distance[sn]+adj_matrix[sn][dn])) {	
-						System.out.println("graph contains negative edge cycles");
-						break;
-					}
-				}
+			distance[source]=0;
+		for(int node=1;node<=n;node++){
+		for(int sn=1;sn<=n;sn++){
+		for(int dn=1;dn<=n;dn++){
+			if(a[sn][dn]!=999)
+			{
+				if(distance[dn]>distance[sn]+a[sn][dn]){
+					distance[dn]=distance[sn]+a[sn][dn];}
 			}
-			
-		}
-		for(int ver=1;ver<=nv;ver++) {
-			System.out.println("distance from source "+source+" to destination "+ver+" is :"+distance[ver]);
 		}
 	}
-}
+	}
+	for(int sn=1;sn<=n;sn++){
+	for(int dn=1;dn<=n;dn++){
+		if (a[sn][dn]!=999){
+		
+		if(distance[dn]>distance[sn]+a[sn][dn]){
+			distance[dn]=distance[sn]+a[sn][dn];
+			System.out.println("the graph contains negative edge cycle");
+			return;
+			}
+		}
+		}
+		}
+		
+		for(int vertex=1;vertex<=n;vertex++)
+		System.out.println("distance of"+ source+"to"+vertex +"is:"+distance[vertex]);
+		}
+	
+		}
+		
+		
+			
+		
+							
+	
