@@ -15,8 +15,8 @@ set val(ifqlen) 50                         ;# max packet in ifq
 set val(nn)     7                          ;# number of mobilenodes
 set val(rp)     AODV                       ;# routing protocol
 set val(x)      1584                      ;# X dimension of topography
-set val(y)      900                      ;# Y dimension of topography
-set val(stop)   80.0                         ;# time of simulation end
+set val(y)      100                      ;# Y dimension of topography
+set val(stop)   10.0                         ;# time of simulation end
 
 #===================================
 #        Initialization        
@@ -124,8 +124,7 @@ $udp1 set packetSize_ 1500
 set ftp0 [new Application/FTP]
 $ftp0 attach-agent $tcp0
 $ns at 1.0 "$ftp0 start"
-$ns at 5.0 "$n0 setdest 800 800 20"
-$ns at 80.0 "$ftp0 stop"
+$ns at 2.0 "$ftp0 stop"
 
 #Setup a CBR Application over UDP connection
 set cbr1 [new Application/Traffic/CBR]
@@ -158,23 +157,20 @@ $ns at $val(stop) "puts \"done\" ; $ns halt"
 $ns run
 
 
-
 awk file
 
-BEGIN { }
+BEGIN { 
+	count=0;
+	packet=0;
+	time=0;
+}
 {
 	if($1=="r" && $3=="_2_" && $4=="AGT") {
-		count1++;
+		count++;
 		packet1=packet+$8;
 		time1=$2;
 	}
-	if($1=="r" && $3=="_3_" && $4=="AGT") {
-		count2++;
-		packet2=packet+$8;
-		time2=$2;
-	}
 }
 END { 
-	printf("The Throughput from no to n2 is %f Mbps\n",(count1*packet1*8)/(time1*1000000));
-	printf("The Throughput from n1 to n3 is %f Mbps\n",(count2*packet2*8)/(time2*1000000));
+	printf("The Throughput from no to n2 is %f Mbps\n",(count*packet1*8)/(time1*1000000));
 }
